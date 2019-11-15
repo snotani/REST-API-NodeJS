@@ -1,7 +1,10 @@
 const express = require('express');
+const Joi = require('joi');
+const bodyParser = require('body-parser');
 const app = express();
 
-app.use(express.json());
+app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.json());
 // app.use((req, res, next) => {
 //     res.header("Access-Control-Allow-Origin", '*');
 //     res.header(
@@ -16,10 +19,12 @@ app.use(express.json());
 
 const getAuctionsApi = require('./api/get_auctions');
 const auctionApis = require('./api/auction');
+const bidApis = require('./api/bid');
 const userApis = require('./api/user');
 
 app.use('/api/user', userApis);
 app.use('/api/auctions', getAuctionsApi)
 app.use('/api/auction', auctionApis);
+app.use('/api/auction', bidApis);
 
 module.exports = app;
