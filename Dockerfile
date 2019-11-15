@@ -1,7 +1,15 @@
-FROM java:8-jdk-alpine
-COPY ./src/ ./usr
-COPY ./libs/ ./usr
-WORKDIR ./usr
+FROM node:10
+
+# Create app directory
+WORKDIR /usr/src/app
+
+# Install app dependencies
+COPY package*.json ./
+
+RUN npm install
+# Bundle app source
+
+COPY . .
+
 EXPOSE 8080
-RUN javac -cp .:json-20190722.jar Server.java
-CMD java -cp .:json-20190722.jar Server
+CMD [ "node", "server.js" ]
